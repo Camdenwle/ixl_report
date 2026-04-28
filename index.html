@@ -161,6 +161,49 @@
     margin: 1.2em 0;
   }
 
+  .schema-card {
+    border: 2px solid #222;
+    background: #fcfcfc;
+    padding: 14px 16px;
+    margin: 1.3em 0;
+  }
+
+  .schema-card h4 {
+    margin-top: 0;
+    border-bottom: 1px solid #222;
+    padding-bottom: 6px;
+  }
+
+  .schema-table {
+    margin: 0.8em 0 0;
+    font-size: 0.88em;
+  }
+
+  .schema-table th {
+    background: #222;
+    color: #fff;
+    border-color: #222;
+    font-weight: 700;
+  }
+
+  .schema-table td {
+    border-color: #999;
+  }
+
+  .schema-table td:first-child {
+    width: 28%;
+    font-family: Consolas, "Courier New", monospace;
+    font-weight: 700;
+    color: #111;
+    background: #f4f4f4;
+  }
+
+  .schema-table td:nth-child(2) {
+    width: 18%;
+    font-family: Consolas, "Courier New", monospace;
+    white-space: nowrap;
+  }
+
   .weighting-table {
     width: 100%;
     border-collapse: collapse;
@@ -480,42 +523,96 @@
   </ul>
 </div>
 
-<table>
-  <thead>
-    <tr>
-      <th>Moment</th>
-      <th>What gets stored</th>
-      <th>Who creates it</th>
-      <th>Why it matters</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Draft</td>
-      <td>Assignment title, due date, selected class or students, recommended skills, lessons, videos, and recommendation reasons</td>
-      <td>IXL drafts it through Auto-Assign, or the teacher builds it manually</td>
-      <td>The teacher can understand and edit the assignment before it reaches students.</td>
-    </tr>
-    <tr>
-      <td>Publish</td>
-      <td>Per-student assignment records, assigned track, starting SmartScore, accommodation snapshot, and content order</td>
-      <td>System creates these records after teacher approval</td>
-      <td>Each student gets a stable homework path, even if the roster or profile changes later.</td>
-    </tr>
-    <tr>
-      <td>During work</td>
-      <td>Item progress, time spent, completion percentage, current status, and struggle signals</td>
-      <td>Student activity updates the records automatically</td>
-      <td>Teachers can see who is moving, who is stuck, and who may need a different follow-up.</td>
-    </tr>
-    <tr>
-      <td>Submission</td>
-      <td>Submitted status, final SmartScore, final completion, and summary reporting fields</td>
-      <td>System saves these once the student finishes or the teacher closes the assignment</td>
-      <td>Reports stay consistent instead of changing every time a student practices later.</td>
-    </tr>
-  </tbody>
-</table>
+<div class="schema-card">
+  <h4>Table: assignments</h4>
+  <p>This is the teacher-facing homework object.</p>
+  <table class="schema-table">
+    <thead>
+      <tr>
+        <th>Field</th>
+        <th>Type</th>
+        <th>Purpose</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>assignment_id</td><td>UUID</td><td>Primary key for the homework assignment.</td></tr>
+      <tr><td>teacher_id</td><td>UUID</td><td>Connects the assignment to the teacher who owns it.</td></tr>
+      <tr><td>title</td><td>TextField</td><td>Teacher-facing assignment name.</td></tr>
+      <tr><td>due_date</td><td>DateTimeField</td><td>Controls the student deadline and reporting window.</td></tr>
+      <tr><td>status</td><td>CharField</td><td>Draft, active, or archived.</td></tr>
+      <tr><td>generation_mode</td><td>CharField</td><td>Auto-Assign, manual, or mixed creation.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="schema-card">
+  <h4>Table: assignment_items</h4>
+  <p>This stores the ordered skills, lessons, and videos inside the assignment.</p>
+  <table class="schema-table">
+    <thead>
+      <tr>
+        <th>Field</th>
+        <th>Type</th>
+        <th>Purpose</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>item_id</td><td>UUID</td><td>Primary key for each item in the assignment path.</td></tr>
+      <tr><td>assignment_id</td><td>UUID</td><td>Connects the item back to the assignment.</td></tr>
+      <tr><td>content_type</td><td>CharField</td><td>Skill, lesson, or video.</td></tr>
+      <tr><td>content_id</td><td>UUID / TextField</td><td>Points to the existing IXL content object.</td></tr>
+      <tr><td>sequence_order</td><td>IntegerField</td><td>Controls the order students see the work.</td></tr>
+      <tr><td>recommendation_reason</td><td>TextField</td><td>Explains why Auto-Assign selected that item.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="schema-card">
+  <h4>Table: student_assignments</h4>
+  <p>This freezes the version each student receives at publish time.</p>
+  <table class="schema-table">
+    <thead>
+      <tr>
+        <th>Field</th>
+        <th>Type</th>
+        <th>Purpose</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>student_assign_id</td><td>UUID</td><td>Primary key for a student's delivered assignment.</td></tr>
+      <tr><td>assignment_id</td><td>UUID</td><td>Connects the student record back to the assignment.</td></tr>
+      <tr><td>student_id</td><td>UUID</td><td>Identifies the student receiving the work.</td></tr>
+      <tr><td>status</td><td>CharField</td><td>Not started, in progress, or submitted.</td></tr>
+      <tr><td>accommodations_id</td><td>UUID</td><td>Links to the student's accommodation profile.</td></tr>
+      <tr><td>accommodation_snapshot_json</td><td>JSONField</td><td>Freezes applied supports so later profile edits do not rewrite active work.</td></tr>
+      <tr><td>assigned_track</td><td>CharField</td><td>Labels the track or group version the student received.</td></tr>
+      <tr><td>generated_from_smartscore</td><td>BooleanField</td><td>Shows whether the path came from Auto-Assign.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="schema-card">
+  <h4>Table: student_item_progress</h4>
+  <p>This tracks what happens as the student works through each item.</p>
+  <table class="schema-table">
+    <thead>
+      <tr>
+        <th>Field</th>
+        <th>Type</th>
+        <th>Purpose</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>progress_id</td><td>UUID</td><td>Primary key for an item-level progress row.</td></tr>
+      <tr><td>student_assign_id</td><td>UUID</td><td>Connects progress back to the student's delivered assignment.</td></tr>
+      <tr><td>item_id</td><td>UUID</td><td>Identifies the skill, lesson, or video being tracked.</td></tr>
+      <tr><td>completion_pct</td><td>FloatField</td><td>Shows how much of the item is complete.</td></tr>
+      <tr><td>time_spent_seconds</td><td>IntegerField</td><td>Feeds struggle signals without crowding the teacher view.</td></tr>
+      <tr><td>smart_score_start</td><td>IntegerField</td><td>Captures the student's starting mastery signal.</td></tr>
+      <tr><td>smart_score_final</td><td>IntegerField</td><td>Captures the final mastery signal used in reports.</td></tr>
+    </tbody>
+  </table>
+</div>
 
 <div class="chart-block">
   <div class="chart-title">Delivery Architecture Diagram</div>
@@ -560,22 +657,9 @@
   <strong>See the attachment <a href="#" id="ixl-demo-link">ixl_demo.html</a>.</strong> It replaces the static wireframe and serves as the clearest representation of the intended teacher workflow.
 </div>
 
-<p>The demo should make one thing clear: teachers can either build homework manually for a student or use Auto-Assign to let IXL generate the first personalized draft from the data it already has.</p>
+<p>The demo should make one thing clear: teachers can either build homework manually for a student or use Auto-Assign to let IXL generate the first personalized draft from the data it already has. The interface should feel like a split workspace: content search and filters on one side, assignment review on the other.</p>
 
-<pre><code>CONTENT SELECTION / REVIEW
-------------------------------------------------------------
-Student or group: [ 5th Period - Fractions Group v ]  Due: [ Fri ]
-
-[ Auto-Assign from SmartScore ]    [ Manual Build ]
-
-LEFT PANEL                         RIGHT PANEL
-Search skills, videos, lessons     Assignment draft
-Filter by standard or topic        1. Short lesson: Equivalent fractions
-Show current SmartScore gap        2. Practice: Add unlike denominators
-                                   3. Video: Visual fraction models
-
-Teacher can remove, reorder, or add items before publishing.
-Review shows estimated time, accommodations applied, and why each item was chosen.</code></pre>
+<p>In the review panel, the teacher should see the student or group being edited, due date, ordered assignment path, estimated time, applied accommodations, and a short reason for each Auto-Assign recommendation. The teacher can remove, reorder, or add items before publishing, which is important because automation only works if teachers can quickly validate it.</p>
 
 <h4>Manual Build Mode</h4>
 <p>The teacher enters a student, reviews readiness, and manually selects skills, videos, and lessons. The left side of the builder supports search, standards-aligned filtering, and browsing across content types; the right side shows the ordered homework path, estimated student time, and whether the teacher is editing a group track or an individual-student version.</p>
