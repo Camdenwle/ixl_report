@@ -288,8 +288,6 @@
 
 <p>My mother's biggest frustration with many education tools is that they create one more place to check instead of reducing work. The comment that stuck with me was simple: "I need the platform to save me time while I'm already juggling differentiation, grading, parent communication, and compliance."</p>
 
-<p>This report is my original proposal. After writing it, I used AI as a second pass to build a more expanded companion version that fills in additional detail: <a href="#" id="ixl-ai-enhanced-link">ixl_AI_enhanced.pdf</a>. I also used AI to help create the interactive workflow demo linked later in Question 3: <a href="#" id="ixl-demo-link-top">ixl_demo.html</a>.</p>
-
 <h2>Product Direction</h2>
 
 <div class="callout">
@@ -489,24 +487,24 @@
   <tbody>
     <tr>
       <td>Clever SSO and roster sync</td>
-      <td>Launch</td>
+      <td>Phase 1</td>
       <td>Roster-linked delivery and backfill are foundational for district usability.</td>
     </tr>
     <tr>
       <td>Chromebook / PWA homework entry</td>
-      <td>Launch</td>
+      <td>Phase 1</td>
       <td>Students need a visible homework destination, not one more hidden web task.</td>
     </tr>
     <tr>
       <td>Google Classroom distribution</td>
-      <td>Later</td>
+      <td>Phase 2</td>
       <td>Useful after the core homework object works, because it helps IXL appear alongside other digital assignments.</td>
     </tr>
   </tbody>
 </table>
 
 <div class="callout">
-  <strong>Why access matters:</strong> A homework tool that does not fit district sign-on, roster, and student-device realities can look good in a mockup and still fail in a real school. Clever and Chromebook visibility should be part of launch, not polish.
+  <strong>Why access matters:</strong> A homework tool that does not fit district sign-on, roster, and student-device realities can look good in a mockup and still fail in a real school. Clever and Chromebook visibility should be Phase 1 work, not polish.
 </div>
 
 <h3>3c. Data Model and Architecture</h3>
@@ -514,14 +512,16 @@
 <p>The main data decision is simple: Homework needs a real assignment record, plus per-student delivery records created when the teacher publishes. That keeps the assignment stable even if the roster, accommodations, or SmartScores change later.</p>
 
 <div class="callout">
-  <strong>Key Decisions:</strong>
+  <strong>Key Decisions / Edge Cases:</strong>
   <ul>
-    <li><strong>Auto-Assign drafts, teacher publishes.</strong> SmartScore and progress history recommend the skills, lessons, and videos; the teacher sees the reasoning and confirms before anything is assigned.</li>
-    <li><strong>Publish creates stable delivery records.</strong> Student assignment rows are created at publish time, so homework does not recalculate live from the roster every time a student opens it.</li>
-    <li><strong>Roster changes are explicit.</strong> Newly rostered students can be backfilled into active assignments; removed students keep historical records but stop receiving active homework.</li>
-    <li><strong>Results freeze after submission.</strong> Final SmartScore, completion, and submitted status are snapshotted so reports stay stable after the due date.</li>
-    <li><strong>Accommodations travel with delivery.</strong> IEP/504 settings are applied from the student profile and snapshotted when homework is delivered, so mid-assignment profile changes do not rewrite work already in progress.</li>
-    <li><strong>Analytics stay separate.</strong> Raw time-on-problem events live in the analytics layer; teachers see clear struggle summaries, not noisy event logs.</li>
+    <li><strong>Auto-Assign drafts, teacher publishes.</strong> This solves the trust problem: SmartScore and progress history can recommend the skills, lessons, and videos, but the teacher sees the reasoning and can edit before anything reaches students.</li>
+    <li><strong>Classwide adds are labeled clearly.</strong> This solves the personalization confusion: if a teacher adds one item to the whole class, the product should show that it is classwide rather than SmartScore-personalized.</li>
+    <li><strong>Publish creates stable delivery records.</strong> This solves the live-recalculation problem: student assignment rows are created at publish time, so homework does not change every time a student opens it.</li>
+    <li><strong>Roster changes are explicit.</strong> This solves the mid-semester roster problem: newly rostered students can be backfilled into active assignments, while removed students keep historical records but stop receiving active homework.</li>
+    <li><strong>Progress persists for students.</strong> This solves the interruption problem: if a student stops midway, work saves continuously and the student resumes from the Homework entry point.</li>
+    <li><strong>Results freeze after submission.</strong> This solves the reporting problem: final SmartScore, completion, and submitted status are snapshotted so reports stay stable after the due date.</li>
+    <li><strong>Accommodations travel with delivery.</strong> This solves the compliance-memory problem: IEP/504 settings are applied from the student profile and snapshotted when homework is delivered, so mid-assignment profile changes do not rewrite work already in progress.</li>
+    <li><strong>Analytics stay separate.</strong> This solves the noise problem: raw time-on-problem events live in the analytics layer, while teachers see clear struggle summaries instead of event logs.</li>
   </ul>
 </div>
 
@@ -725,8 +725,6 @@
     });
   }
   attachLink('ixl-demo-link', 'demo');
-  attachLink('ixl-demo-link-top', 'demo');
-  attachLink('ixl-ai-enhanced-link', 'enhancedPdf');
 })();
 </script>
 </body>
