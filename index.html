@@ -236,10 +236,10 @@
 
 <h1>IXL Product Proposal: Moving from Supplement to Core Workflow</h1>
 <div class="meta">
-  I interviewed and had multiple working conversations with my mother, who taught K-6 and now works as a current interventionist. The proposed fixes in this document come directly from real teacher qualms, then extend across the student, parent, and district perspectives that determine whether a feature is actually adopted and used.
+  I interviewed and had multiple working conversations with my mother, a <strong>K-6 teacher for 20+ years, now an interventionist for 5 years</strong>. The fixes below come from real teacher pain points, then expand to the student, parent, and district needs that decide whether a feature actually gets used.
 </div>
 
-<p>This <strong>ixl_report</strong> was created manually by me. After that, I worked with AI to create a more fully elaborated companion version, hone the product thinking, and help develop the demo; that enhanced version is attached as <a href="#" id="ixl-ai-enhanced-link">ixl_AI_enhanced.pdf</a>. The report here is still meant to read as the more organic and human-authored version.</p>
+<p>I created this <strong>ixl_report</strong> manually first. After I had the core page written, I worked with AI through numerous prompts to create a more fully elaborated companion version that helped flesh out the original report, sharpen the product thinking, and support the demo; that AI-enhanced version is attached as <a href="#" id="ixl-ai-enhanced-link">ixl_AI_enhanced.pdf</a>. This page is the original, more organic human-authored report.</p>
 
 <blockquote>
   <strong>Thesis:</strong> IXL currently functions as an adaptive supplement. The strategic imperative is to evolve it into the core instructional and homework backbone that teachers actually plan their week around.
@@ -249,11 +249,33 @@
 
 <p><strong>Classroom excerpt:</strong> The clearest through-line from those conversations was not "I need more content," but "I need the platform to save me time while I'm already juggling differentiation, grading, parent communication, and compliance."</p>
 
+<h2>Product Direction</h2>
+
+<div class="callout">
+  <strong>Question 2 propositions:</strong>
+  <ul>
+    <li><strong>SmartScore gap-filling:</strong> go to Question 2, item 1 for the auto-differentiated assignment generator that drafts homework from current mastery gaps.</li>
+    <li><strong>Accommodation profiles:</strong> go to Question 2, item 2 for how IEP/504 supports are applied automatically at delivery.</li>
+    <li><strong>Struggle signals:</strong> go to Question 2, item 3 for time-on-problem alerts and analytics-layer boundaries.</li>
+    <li><strong>Parent digest:</strong> go to Question 2, item 4 for plain-language home support and permissioning.</li>
+    <li><strong>District-ready access:</strong> go to Question 2, item 5 for Clever, Chromebook visibility, roster sync, and launch dependencies.</li>
+  </ul>
+</div>
+
+<div class="callout">
+  <strong>Question 3 build decisions:</strong>
+  <ul>
+    <li><strong>Goals:</strong> Question 3a defines the teacher and student outcomes: automated first drafts, reviewable personalization, consolidated progress, persistence, and accommodations.</li>
+    <li><strong>Access:</strong> Question 3b defines where Homework appears for teachers and students, plus the difference between classwide add-to-assignment and SmartScore personalization.</li>
+    <li><strong>Data model:</strong> Question 3c defines publish-time materialization, roster changes, SmartScore snapshots, accommodation snapshots, and reporting stability.</li>
+    <li><strong>Builder modes:</strong> Question 3d defines Manual Build Mode, Auto-Assign Mode, Review State, and Publish Behavior.</li>
+    <li><strong>Distribution:</strong> Question 3e defines launch integrations: Clever SSO/roster sync and Chromebook/PWA visibility before broader Google Classroom distribution.</li>
+  </ul>
+</div>
+
 <h2>Question 1: Describing IXL to a Teacher</h2>
 
-<p>IXL is an adaptive practice platform that automatically adjusts to what each student needs across core subjects, so teachers are not manually finding different practice for every learning level in the room. As students work, IXL grades the practice automatically and surfaces mastery and progress signals that help teachers see who is on track, who needs review, and where to intervene.</p>
-
-<p>That makes IXL strongest today as a practice and analytics layer. The opportunity is to extend that strength into a more complete assignment and homework workflow.</p>
+<p>IXL helps solve the parts of practice that usually drain teacher time: finding the right work for different levels, grading it, figuring out who is stuck, and making sure quiet gaps do not slip by unnoticed. It adjusts practice to each student, gives teachers clear progress and mastery signals, and makes differentiation feel manageable without needing a tech-savvy teacher to constantly monitor it. With IXL, teachers spend less time building and checking generic assignments, ultimately freeing up time for higher-impact tasks.</p>
 
 <div class="two-col">
   <div class="chart-block">
@@ -332,51 +354,46 @@
 
 <h2>Question 2: Challenges and Proposed Enhancements</h2>
 
-<p>The proposed changes are grounded in teacher archetypes that consistently face the same operational problems: a K-5 classroom teacher managing wide readiness spread in one room, an interventionist building targeted practice for small groups, and a secondary teacher who needs student progress data that is actionable rather than merely descriptive. The workload and time-pressure framing here is informed by teacher-hour data from Education Week and Merrimack.</p>
+<p>The proposed changes are grounded in teacher archetypes that run into the same problems again and again: a K-5 teacher managing a wide readiness spread, an interventionist building targeted small-group practice, and a secondary teacher who needs progress data that points to the next move. The time-pressure framing comes from teacher-hour data from Education Week and Merrimack.</p>
 
 <h3>1. Auto-Differentiated Assignment Generation</h3>
-<ul>
-  <li><strong>The Problem:</strong> For a classroom teacher or interventionist, manually creating separate practice for below-level, on-level, and advanced students is too slow. When differentiation takes too long, the default becomes one generalized assignment. For many teachers, that means assigning one skill at a time and then checking later whether SmartScore actually moved.</li>
-  <li><strong>The Enhancement:</strong> A one-click generator on the teacher dashboard groups students by current SmartScore and generates a differentiated homework path for each track, with a teacher review step before publishing.</li>
-  <li><strong>Trade-off/Risk:</strong> Teachers may distrust automated instructional choices. The UI should position this as a recommendation that is transparent, editable, and teacher-approved.</li>
-</ul>
+<p><strong>Problem:</strong> For a classroom teacher or interventionist, the hard part is not knowing that students need different practice. It is finding the time to build below-level, on-level, and advanced versions of the same homework. When that takes too long, the practical fallback is one generalized assignment and a later check to see whether SmartScore moved.</p>
+<p><strong>Solution:</strong> Add a one-click generator on the teacher dashboard that uses current SmartScore to group students and draft a differentiated homework path for each track. The teacher still reviews, edits, and publishes, but the first draft is no longer manual; that creates faster differentiated homework and a clearer bridge from IXL's mastery data to the work students actually receive.</p>
+<p><strong>Build notes:</strong> Show the SmartScore ranges behind each group, keep recommendations editable, and make the final publish action teacher-controlled.</p>
+<p><strong>Risks / Trade-offs:</strong> The main risk is trust. If the reasoning is hidden, teachers may reject the automation; the product should feel like a transparent draft, not an autopilot.</p>
 
 <h3>2. Global IEP and 504 Accommodation Profiles</h3>
-<ul>
-  <li><strong>The Problem:</strong> For teachers serving students with accommodations, assignment delivery is risky if supports must be manually remembered each time. Compliance breaks down when the workflow depends on repeated human memory.</li>
-  <li><strong>The Enhancement:</strong> Accommodation settings such as extended time, reduced problem count, and audio support are configured once at the student profile level and automatically applied when homework is delivered.</li>
-  <li><strong>Trade-off/Risk:</strong> This introduces significant FERPA and legal sensitivity. If the system applies accommodations incorrectly, the product inherits real trust and compliance risk. At the same time, if IXL can deliver accommodations reliably, the product starts to move from optional supplement toward infrastructure that districts treat more seriously.</li>
-</ul>
+<p><strong>Problem:</strong> For teachers serving students with accommodations, the risk is that supports have to be remembered every single time work is assigned. That is fragile. Compliance starts to break down when the workflow depends on repeated human memory.</p>
+<p><strong>Solution:</strong> Let teachers or authorized staff configure supports once at the student profile level, including extended time, reduced problem count, and audio support. When homework is delivered, those settings apply automatically, which means less manual tracking for teachers and a more consistent experience for students who need support.</p>
+<p><strong>Build notes:</strong> Permissions, audit history, and district admin controls matter here more than UI polish.</p>
+<p><strong>Risks / Trade-offs:</strong> This introduces real FERPA and legal sensitivity. If accommodations are applied incorrectly, IXL inherits trust and compliance risk. If it works reliably, though, the product becomes much more credible as school infrastructure.</p>
 
 <h3>3. Per-Problem Time Logging and Struggle Alerts</h3>
-<ul>
-  <li><strong>The Problem:</strong> Accuracy alone does not distinguish productive effort from disengagement. A teacher needs to know whether a student is slowly grappling with material or rapidly clicking through it.</li>
-  <li><strong>The Enhancement:</strong> Log time-to-answer at the problem level and surface alerts when time and accuracy patterns suggest genuine struggle versus likely disengagement.</li>
-  <li><strong>Trade-off/Risk:</strong> This creates high telemetry volume and requires analytics infrastructure that should be separated from the operational assignment system.</li>
-</ul>
+<p><strong>Problem:</strong> Accuracy alone does not tell the full story. A student can get answers wrong because they are working hard through a tough skill, or because they are clicking quickly without much engagement.</p>
+<p><strong>Solution:</strong> Log time-to-answer at the problem level and surface simple alerts when time and accuracy patterns suggest genuine struggle or likely disengagement. This gives teachers better intervention signals than completion alone, plus a clearer way to see who needs help, encouragement, or a different assignment path.</p>
+<p><strong>Build notes:</strong> Keep raw event data in the analytics layer and show only practical summaries in the teacher workflow.</p>
+<p><strong>Risks / Trade-offs:</strong> The trade-off is data volume and interpretation. Time data is useful, but it should not overstate what the product can know about a student's intent.</p>
 
 <h3>4. Plain-Language Parent Digest</h3>
-<ul>
-  <li><strong>The Problem:</strong> Parent-facing performance data is often too abstract. A SmartScore alone does not tell a caregiver what to reinforce that night.</li>
-  <li><strong>The Enhancement:</strong> A concise weekly parent digest explains what the student practiced and suggests one simple offline prompt or reinforcement action.</li>
-  <li><strong>Trade-off/Risk:</strong> Parent communication must be permissioned carefully in district contexts and should default to opt-in.</li>
-</ul>
+<p><strong>Problem:</strong> Parent-facing performance data is often too abstract. A SmartScore can be useful inside IXL, but it does not tell a caregiver what to say or practice that night.</p>
+<p><strong>Solution:</strong> Send a weekly digest that translates homework progress into plain language: what the student practiced, what improved, and one simple offline prompt or reinforcement action. Parents can support homework without needing to understand the full IXL reporting system.</p>
+<p><strong>Build notes:</strong> Use plain language, avoid judgmental labels, and respect district communication settings.</p>
+<p><strong>Risks / Trade-offs:</strong> The risk is communication overreach. Parent messages should be permissioned carefully and default to opt-in in district contexts.</p>
 
 <h3>5. Chromebook PWA and Ecosystem Integration</h3>
-<ul>
-  <li><strong>The Problem:</strong> The most common homework failure mode is often not refusal but friction. If assigned work only lives inside IXL and has no visibility in the systems students already use, it is easier to forget and harder to build into routine.</li>
-  <li><strong>The Enhancement:</strong> Pair the homework experience with strong distribution: Clever-compatible roster and sign-in support from day one, plus a student-facing entry point that can eventually extend to Chromebook or broader portal visibility.</li>
-  <li><strong>Trade-off/Risk:</strong> Integration work creates dependency on district authentication, review processes, and notification restraint. But treating distribution as a later add-on would undercut adoption from the start.</li>
-</ul>
+<p><strong>Problem:</strong> The most common homework failure mode is often not refusal; it is friction. If assigned work only lives inside IXL and has no visibility in the systems students already use, it is easier to forget and harder to make routine.</p>
+<p><strong>Solution:</strong> Launch the homework experience with strong distribution: Clever-compatible roster and sign-in support from day one, plus a student-facing entry point that can extend to Chromebook or broader portal visibility. That means fewer access issues before students start and a homework surface that feels connected to the school day instead of hidden inside one product tab.</p>
+<p><strong>Build notes:</strong> Start with roster and SSO reliability, then add device-level visibility once the core assignment object is stable.</p>
+<p><strong>Risks / Trade-offs:</strong> Integration work creates dependency on district authentication, review processes, and careful notification design. Still, treating distribution as a later add-on would weaken adoption from the start.</p>
 
 <div class="callout">
-  <strong>Why these four:</strong> They all reduce real teacher workload rather than adding new teacher obligations. That is the right filter for an audience already operating under a 50-plus hour workweek.
+  <strong>Why these five:</strong> They all reduce real teacher workload instead of adding another thing to manage. That is the right filter for an audience already operating under a 50-plus hour workweek.
 </div>
 
 <h2>Question 3: Homework Assignments Spec</h2>
 
 <div class="callout">
-  <strong>Observed current workflow:</strong> Today, teachers can direct work in IXL through individual skills and content discovery, but homework remains fragmented because there is no true assignment object that bundles multiple content types, adds a due date, and provides a consolidated completion view. That leaves IXL strong as a practice engine but weaker as a complete homework workflow.
+  <strong>Observed current workflow:</strong> Today, teachers can send students toward IXL work through individual skills and content discovery. What is missing is a homework engine that uses the information IXL already has, especially SmartScore and progress history, to recommend the optimal mix of skills, lessons, and videos for each student. That leaves IXL strong as a practice engine, but weaker as a full homework workflow that can create personalized assignments automatically and still give teachers a clean review step.
 </div>
 
 <h3>3a. Goals for Teachers and Students</h3>
@@ -385,8 +402,8 @@
   <div class="col-box">
     <h4>For Teachers</h4>
     <ul>
-      <li><strong>Frictionless bundling:</strong> Combine skills, lessons, and videos into one assignment with a single due date.</li>
-      <li><strong>Time-saving differentiation:</strong> Quickly assign different sequences to different student cohorts without rebuilding from scratch.</li>
+      <li><strong>Automated first draft:</strong> Use SmartScore and existing IXL content to recommend the right skills, lessons, and videos for each student.</li>
+      <li><strong>Time-saving differentiation:</strong> Review and adjust personalized sequences without rebuilding homework from scratch.</li>
       <li><strong>Consolidated reporting:</strong> See one assignment-level progress view instead of isolated content completion signals.</li>
     </ul>
   </div>
@@ -402,11 +419,11 @@
 
 <h3>3b. Access and Navigation</h3>
 
-<p><strong>For Teachers:</strong> After actually using the site, I would place Homework first on the teacher dashboard in <strong>"At a glance"</strong> under <strong>"Teaching tools"</strong>. That is the easiest place to make it feel useful immediately for a teacher who logs in and wants to act fast. At the same time, I would still give the feature a more permanent home, so the full Homework experience would officially get its own column within the <strong>Learning</strong> dropdown from the navbar.</p>
+<p><strong>Teacher entry:</strong> Put Homework in <strong>"At a glance"</strong> under <strong>"Teaching tools"</strong> for fast action, and also give it a permanent home in the <strong>Learning</strong> dropdown so it feels like a core workflow.</p>
 
-<p><strong>For Students:</strong> Homework should appear prominently on the student landing page and be accessible as its own destination within the Learning navigation. The interaction goal is clarity: students should not have to infer which suggested task is "homework" versus optional practice. The student-facing surface should behave like a true to-do state, showing teacher, due date, and completion progress in one place.</p>
+<p><strong>Student entry:</strong> Homework should appear as a high-visibility to-do on the student landing page, with teacher, due date, and progress in one place. Students should not have to guess which suggested task is required and which one is optional practice.</p>
 
-<p><strong>Important workflow nuance:</strong> I do think there should be a quick way to add content into an assignment while browsing skills, lessons, or videos. But that is not the same thing as personalized homework. If a teacher adds one item to an entire class at once, that is faster, but it also means the assignment is no longer being tailored to each student's SmartScore. That trade-off should be explicit in the product rather than hidden.</p>
+<p><strong>Personalization rule:</strong> Auto-Assign is the primary path: IXL uses SmartScore to draft student-specific homework from existing skills, lessons, and videos. A quick "Add to Assignment" path should still exist for browsing, but classwide adds must be labeled as non-personalized so the trade-off is clear.</p>
 
 <table>
   <thead>
@@ -446,12 +463,24 @@
 </table>
 
 <div class="callout">
-  <strong>Why distribution is part of the product, not an add-on:</strong> A homework tool that does not fit district sign-on, roster, and student-device realities will feel good in a mockup and fail in a real school. That is especially true in mid-size and large districts where IT approval is part of whether teachers ever see the feature, which is why the Clever / Chromebook / visibility layer should be part of the original concept rather than something bolted on later.
+  <strong>Why distribution is part of the product, not an add-on:</strong> A homework tool that does not fit district sign-on, roster, and student-device realities can look good in a mockup and still fail in a real school. That is especially true in mid-size and large districts where IT approval shapes what teachers can actually use. Clever, Chromebook, and visibility work should be part of the original concept, not something bolted on later.
 </div>
 
 <h3>3c. Data Model and Architecture</h3>
 
-<p>To support mixed-content bundling, per-student delivery, and stable reporting, the feature needs a relational schema that treats assignments as first-class objects rather than a loose collection of content links.</p>
+<p>To support automated personalization, mixed-content delivery, and reliable reporting, Homework needs a relational schema that treats assignments as first-class objects with per-student generated paths. It should not just be a loose collection of content links.</p>
+
+<div class="callout">
+  <strong>Key Decisions:</strong>
+  <ul>
+    <li><strong>Auto-Assign drafts, teacher publishes.</strong> SmartScore and progress history recommend the skills, lessons, and videos; the teacher sees the reasoning and confirms before anything is assigned.</li>
+    <li><strong>Publish creates stable delivery records.</strong> Student assignment rows are created at publish time, so homework does not recalculate live from the roster every time a student opens it.</li>
+    <li><strong>Roster changes are explicit.</strong> Newly rostered students can be backfilled into active assignments; removed students keep historical records but stop receiving active homework.</li>
+    <li><strong>Results freeze after submission.</strong> Final SmartScore, completion, and submitted status are snapshotted so reports stay stable after the due date.</li>
+    <li><strong>Accommodations travel with delivery.</strong> IEP/504 settings are applied from the student profile and snapshotted when homework is delivered, so mid-assignment profile changes do not rewrite work already in progress.</li>
+    <li><strong>Analytics stay separate.</strong> Raw time-on-problem events live in the analytics layer; teachers see clear struggle summaries, not noisy event logs.</li>
+  </ul>
+</div>
 
 <pre><code>TABLE: assignments
 -----------------------------------------
@@ -468,6 +497,7 @@ assignment_id      (UUID, Foreign Key)
 content_type       (ENUM: skill, lesson, video)
 content_id         (VARCHAR)
 sequence_order     (INTEGER)
+recommendation_reason (VARCHAR)
 
 TABLE: student_assignments
 -----------------------------------------
@@ -476,6 +506,9 @@ assignment_id      (UUID, Foreign Key)
 student_id         (UUID, Foreign Key)
 status             (ENUM: not_started, in_progress, submitted)
 accommodations_id  (UUID)
+accommodation_snapshot_json (JSONB)
+assigned_track     (VARCHAR)
+generated_from_smartscore (BOOLEAN)
 
 TABLE: student_item_progress
 -----------------------------------------
@@ -483,6 +516,7 @@ progress_id        (UUID, Primary Key)
 student_assign_id  (UUID, Foreign Key)
 item_id            (UUID, Foreign Key)
 completion_pct     (FLOAT)
+smart_score_start  (INTEGER)
 smart_score_final  (INTEGER)</code></pre>
 
 <div class="chart-block">
@@ -519,7 +553,7 @@ smart_score_final  (INTEGER)</code></pre>
 </div>
 
 <div class="callout">
-  <strong>Key implementation notes:</strong> Student assignments should be materialized at publish time for scale. SmartScore snapshots should be immutable after submission. Clever roster sync should backfill assignment rows for newly rostered students. Accommodation profiles should be snapshotted at delivery so mid-assignment changes do not rewrite work already in progress.
+  <strong>Key implementation notes:</strong> Store the generated path, recommendation reasons, accommodation snapshot, assigned track, and starting SmartScore on the per-student assignment records. Keep raw time-on-problem telemetry outside the operational assignment tables and surface only summarized struggle indicators in reporting. Clever roster sync should support backfill for newly rostered students without rewriting completed work.
 </div>
 
 <h3>3d. Content Selection Interface</h3>
@@ -528,16 +562,24 @@ smart_score_final  (INTEGER)</code></pre>
   <strong>See the attachment <a href="#" id="ixl-demo-link">ixl_demo.html</a>.</strong> It replaces the static wireframe and serves as the clearest representation of the intended teacher workflow.
 </div>
 
-<p>The interaction is intentionally built around the actual sequence a teacher would follow rather than around a standalone builder screen. The flow starts at the class roster, where a teacher can review current readiness, use SmartScore-informed grouping, and decide whether to edit a shared group assignment or open an individual student. That matters because the core product problem is not just "how do I add content," but "how do I move from class-level insight to publishable homework without rebuilding the work for every student?"</p>
+<p>The demo should make one thing clear: teachers can either build homework manually for a student or use Auto-Assign to let IXL generate the first personalized draft from the data it already has.</p>
 
-<p>Inside the builder itself, the left side is optimized for discovery and selection: search, standards-aligned filtering, and browsing across skills, lessons, and videos. The right side is optimized for sequencing and review: the ordered assignment list, estimated student time, and the contextual signal showing whether the teacher is editing a whole group track or a single-student variation. That split is important because teachers think about assignment creation in two parallel modes: first, "what content is appropriate?" and second, "what exact experience will the student move through?"</p>
+<h4>Manual Build Mode</h4>
+<p>The teacher enters a student, reviews readiness, and manually selects skills, videos, and lessons. The left side of the builder supports search, standards-aligned filtering, and browsing across content types; the right side shows the ordered homework path, estimated student time, and whether the teacher is editing a group track or an individual-student version.</p>
 
-<p>The demo is also designed to show that this feature should support two valid teaching behaviors from the same surface. For a K-5 classroom teacher or interventionist, the highest-value path is fast auto-differentiation followed by lightweight review. For a secondary teacher, the highest-value path may be more manual curation, such as building a sequence that starts with a short lesson or video and then moves into targeted practice. The same interface should accommodate both without forcing one mental model onto every teacher.</p>
+<h4>Auto-Assign Mode</h4>
+<p>Auto-Assign is the key feature in the demo. It analyzes the student's SmartScore, progress history, and other available IXL signals, then chooses the optimal mix of skills, lessons, and videos for a custom homework path. The point is not just "add content faster"; it is to turn IXL's existing student insight into publishable homework without rebuilding the work for every student.</p>
 
-<p>Most importantly, the intended experience is not a content-picker bolted on top of IXL. It is a workflow bridge between three things IXL already does well in pieces: content coverage, mastery data, and progress visibility. The builder should be the surface that connects those strengths into one coherent homework system. That also means the review state should surface practical signals such as estimated student time, whether accommodation profiles are already applied, and whether the assignment is being edited at the group level or the individual-student level.</p>
+<h4>Review State</h4>
+<p>Before publishing, the teacher should see the generated path, estimated time, why each item was recommended, applied accommodations, and whether edits affect a group or one student. For a K-5 teacher or interventionist, the highest-value path is often Auto-Assign followed by a quick review. For a secondary teacher, the better path may be manually editing the generated sequence, such as starting with a short lesson or video and then moving into targeted practice.</p>
+
+<h4>Publish Behavior</h4>
+<p>Publishing creates the stable student assignment records described in 3c. That means the teacher-approved path, SmartScore starting point, accommodation snapshot, and recommendation reasons are stored for reporting and auditability.</p>
+
+<p>Most importantly, this should not feel like a content-picker bolted on top of IXL. It should connect three strengths IXL already has: content coverage, mastery data, and progress visibility.</p>
 
 <h3>3e. Integration and Distribution Priorities</h3>
-<p>Homework only becomes core workflow if it reaches students in the places where they already operate. That makes integration a product requirement, not an implementation afterthought.</p>
+<p>Homework only becomes core workflow if it reaches students in the places where they already work. That makes integration a product requirement, not an implementation afterthought.</p>
 
 <table>
   <thead>
@@ -566,7 +608,7 @@ smart_score_final  (INTEGER)</code></pre>
   </tbody>
 </table>
 
-<p>My view here is that Clever-level compatibility is effectively a launch requirement for district credibility, while broader distribution layers such as Google Classroom deepen adoption after the core homework object works. In other words, the homework feature should not be thought of as just a content workflow; it is also a delivery workflow.</p>
+<p>My view is that Clever-level compatibility is a launch requirement for district credibility. Broader distribution, like Google Classroom, can deepen adoption after the core homework object works. In other words, Homework is not just a content workflow; it is also a delivery workflow.</p>
 
 <div class="refs">
   <h2>References</h2>
