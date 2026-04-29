@@ -304,8 +304,8 @@
 <div class="callout">
   <strong>Question 3 build decisions:</strong>
   <ul>
-    <li><strong>Goals:</strong> Question 3a defines the teacher and student outcomes: automated first drafts, reviewable personalization, consolidated progress, persistence, and accommodations.</li>
-    <li><strong>Access:</strong> Question 3b defines where Homework appears for teachers and students, plus the difference between classwide add-to-assignment and SmartScore personalization.</li>
+    <li><strong>Goals:</strong> Question 3a defines the teacher and student outcomes: automated first drafts, reviewable personalization, short review-first homework, consolidated progress, persistence, and accommodations.</li>
+    <li><strong>Access:</strong> Question 3b defines where Homework appears for teachers and students, including the simple student landing-page entry and the difference between classwide add-to-assignment and SmartScore personalization.</li>
     <li><strong>Data model:</strong> Question 3c defines publish-time materialization, roster changes, SmartScore snapshots, accommodation snapshots, and reporting stability.</li>
     <li><strong>Builder modes:</strong> Question 3d defines Manual Build Mode, Auto-Assign Mode, Review State, and Publish Behavior.</li>
     <li><strong>Distribution:</strong> Question 3b includes the access and integration choices needed for launch.</li>
@@ -314,7 +314,7 @@
 
 <h2>Question 1: Describing IXL to a Teacher</h2>
 
-<p>IXL is an adaptive practice platform that gives students targeted practice across core subjects and adjusts as they answer questions. For teachers, it automatically grades work and shows progress, mastery, and skill gaps so they can see who is ready to move on and who needs review. In practice, it helps teachers spend less time checking generic assignments and more time deciding where their support will matter most.</p>
+<p>IXL is an adaptive practice platform for core subjects that gives students standards-aligned practice and adjusts as they answer questions. It can identify skill gaps, provide targeted practice or support videos, and grade work automatically as students move toward proficiency. For teachers, the value is a clearer view of who needs review without having to build or check every assignment by hand.</p>
 
 <h2>Question 2: Challenges and Proposed Enhancements</h2>
 
@@ -394,7 +394,7 @@
 <h3>5. Chromebook PWA and Ecosystem Integration</h3>
 <p><strong>Problem:</strong> A lot of homework failure is boring but real: students forget where to go, lose the link, or never build the habit of opening the right tab. If assigned work only lives inside IXL and has no visibility in the systems students already use, it is easier to miss.</p>
 <p><strong>Solution:</strong> Launch the homework experience with strong distribution: Clever-compatible roster and sign-in support from day one, plus a student-facing entry point that can extend to Chromebook or broader portal visibility. That means fewer access issues before students start and a homework surface that feels connected to the school day instead of hidden inside one product tab.</p>
-<p><strong>Build notes:</strong> Start with roster and SSO reliability, then add device-level visibility once the core assignment object is stable.</p>
+<p><strong>Build notes:</strong> Start with roster, SSO, and district security reliability, then add device-level visibility once the core assignment object is stable.</p>
 <p><strong>Risks / Trade-offs:</strong> Integration work creates dependency on district authentication, review processes, and careful notification design. Still, treating distribution as a later add-on would weaken adoption from the start.</p>
 
 <div class="callout">
@@ -413,8 +413,8 @@
   <div class="col-box">
     <h4>Teacher Workflow</h4>
     <ul>
-      <li><strong>Create:</strong> Start from a class, group, or individual student, then use Auto-Assign or manual selection to build the assignment.</li>
-      <li><strong>Assign:</strong> Set a due date, review the recommended skills, lessons, and videos, confirm accommodations, and publish.</li>
+      <li><strong>Create:</strong> Start from a class, group, or individual student, then use Auto-Assign or manual selection to build the assignment. The fastest version should feel close to picking the class, clicking Homework, reviewing the draft, and publishing.</li>
+      <li><strong>Assign:</strong> Set a due date, review the recommended skills, lessons, and videos, confirm accommodations, and publish. Homework should usually reinforce prior instruction rather than introduce brand-new content.</li>
       <li><strong>Review:</strong> Track started, in-progress, submitted, SmartScore movement, time spent, and where students still seem stuck.</li>
       <li><strong>Adjust:</strong> Edit the draft before publishing and make follow-up assignments from the same progress view.</li>
     </ul>
@@ -422,7 +422,7 @@
   <div class="col-box">
     <h4>Student Workflow</h4>
     <ul>
-      <li><strong>Receive:</strong> See homework as a clear to-do with teacher, due date, and progress, not as a vague suggested skill.</li>
+      <li><strong>Receive:</strong> See homework as a clear to-do on the landing page right after login, with teacher, due date, and progress, not as a vague suggested skill.</li>
       <li><strong>Complete:</strong> Work through the assigned sequence with progress saved continuously across interruptions.</li>
       <li><strong>Submit:</strong> Finish the assignment once required items or mastery targets are complete.</li>
       <li><strong>Use supports:</strong> Accommodations apply quietly in the background so students do not have to request them again.</li>
@@ -434,7 +434,7 @@
 
 <p><strong>Teacher entry:</strong> Put Homework in <strong>"At a glance"</strong> under <strong>"Teaching tools"</strong> for fast action, and also give it a permanent home in the <strong>Learning</strong> dropdown so it feels like a core workflow.</p>
 
-<p><strong>Student entry:</strong> Homework should appear as a high-visibility to-do on the student landing page, with teacher, due date, and progress in one place. Students should not have to guess which suggested task is required and which one is optional practice.</p>
+<p><strong>Student entry:</strong> Homework should appear as a high-visibility to-do on the student landing page, with teacher, due date, and progress in one place. Ideally, the student logs in, sees Homework immediately, clicks one obvious start button, and gets to work.</p>
 
 <p><strong>Personalization rule:</strong> Auto-Assign is the primary path: IXL uses SmartScore to draft student-specific homework from existing skills, lessons, and videos. A quick "Add to Assignment" path should still exist for browsing, but classwide adds must be labeled as non-personalized so the trade-off is clear.</p>
 
@@ -486,9 +486,9 @@
   </thead>
   <tbody>
     <tr>
-      <td>Clever SSO and roster sync</td>
+      <td>Clever SSO, roster sync, and district security fit</td>
       <td>Phase 1</td>
-      <td>Roster-linked delivery and backfill are foundational for district usability.</td>
+      <td>Roster-linked delivery, backfill, and secure hub access are foundational for district usability.</td>
     </tr>
     <tr>
       <td>Chromebook / PWA homework entry</td>
@@ -504,7 +504,7 @@
 </table>
 
 <div class="callout">
-  <strong>Why access matters:</strong> A homework tool that does not fit district sign-on, roster, and student-device realities can look good in a mockup and still fail in a real school. Clever and Chromebook visibility should be Phase 1 work, not polish.
+  <strong>Why access matters:</strong> A homework tool that does not fit district sign-on, roster, security, and student-device realities can look good in a mockup and still fail in a real school. Clever and Chromebook visibility should be Phase 1 work, not polish.
 </div>
 
 <h3>3c. Data Model and Architecture</h3>
@@ -515,6 +515,8 @@
   <strong>Key Decisions / Edge Cases:</strong>
   <ul>
     <li><strong>Auto-Assign drafts, teacher publishes.</strong> This solves the trust problem: SmartScore and progress history can recommend the skills, lessons, and videos, but the teacher sees the reasoning and can edit before anything reaches students.</li>
+    <li><strong>Homework is review-first.</strong> This solves the instructional-fit problem: IXL can use prior struggle areas to reinforce learning, while brand-new teaching still happens with the teacher.</li>
+    <li><strong>Assignments match the student's level.</strong> This solves the fatigue problem: Auto-Assign should use grade-level timing estimates, student readiness, and content difficulty as guardrails, with shorter homework for younger or lower-level students.</li>
     <li><strong>Classwide adds are labeled clearly.</strong> This solves the personalization confusion: if a teacher adds one item to the whole class, the product should show that it is classwide rather than SmartScore-personalized.</li>
     <li><strong>Publish creates stable delivery records.</strong> This solves the live-recalculation problem: student assignment rows are created at publish time, so homework does not change every time a student opens it.</li>
     <li><strong>Roster changes are explicit.</strong> This solves the mid-semester roster problem: newly rostered students can be backfilled into active assignments, while removed students keep historical records but stop receiving active homework.</li>
@@ -661,13 +663,13 @@
 
 <p>The demo should make one thing clear: teachers can either build homework manually for a student or use Auto-Assign to let IXL generate the first personalized draft from the data it already has. The interface should feel like a split workspace: content search and filters on one side, assignment review on the other.</p>
 
-<p>In the review panel, the teacher should see the student or group being edited, due date, ordered assignment path, estimated time, applied accommodations, and a short reason for each Auto-Assign recommendation. The teacher can remove, reorder, or add items before publishing, which is important because automation only works if teachers can quickly validate it.</p>
+<p>In the review panel, the teacher should see the student or group being edited, due date, ordered assignment path, estimated time, applied accommodations, and a short reason for each Auto-Assign recommendation. The teacher can remove, reorder, or add items before publishing, which is important because automation only works if teachers can quickly validate it. Student engagement also has to be protected here: if the draft looks too long or too repetitive, the teacher should be able to fix that before it goes out.</p>
 
 <h4>Manual Build Mode</h4>
 <p>The teacher enters a student, reviews readiness, and manually selects skills, videos, and lessons. The left side of the builder supports search, standards-aligned filtering, and browsing across content types; the right side shows the ordered homework path, estimated student time, and whether the teacher is editing a group track or an individual-student version.</p>
 
 <h4>Auto-Assign Mode</h4>
-<p>Auto-Assign is the key feature in the demo. It analyzes the student's SmartScore, progress history, and other available IXL signals, then chooses the optimal mix of skills, lessons, and videos for a custom homework path. The point is not just "add content faster"; it is to turn IXL's existing student insight into publishable homework without rebuilding the work for every student.</p>
+<p>Auto-Assign is the key feature in the demo. It analyzes the student's SmartScore, progress history, and other available IXL signals, then chooses the optimal mix of review skills, lessons, and videos for a custom homework path. The point is not just "add content faster"; it is to turn IXL's existing student insight into publishable homework without rebuilding the work for every student.</p>
 
 <h4>Review State</h4>
 <p>Before publishing, the teacher should see the generated path, estimated time, why each item was recommended, applied accommodations, and whether edits affect a group or one student. For a K-5 teacher or interventionist, the highest-value path is often Auto-Assign followed by a quick review. For a secondary teacher, the better path may be manually editing the generated sequence, such as starting with a short lesson or video and then moving into targeted practice.</p>
